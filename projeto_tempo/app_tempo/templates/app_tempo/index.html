@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>App do tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>App para ver o tempo</h1>
+    <div class="form-container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Adicionar Cidade</button>
+        </form>
+        <form method="get" action="{% url 'limpar_cidades' %}">
+            <button type="submit">Limpar Cidades</button>
+        </form>
+    </div>
+    <ul>
+        {% for tempo in dados_tempo %}
+            <li>
+                <h2>{{ tempo.cidade }}</h2>
+                <p>{{ tempo.temperatura }}°C</p>
+                <p>{{ tempo.descricao }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ tempo.icone }}@2x.png" alt="{{ tempo.descricao }}">
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
